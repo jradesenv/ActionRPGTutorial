@@ -6,9 +6,11 @@ public class PlayerController : MonoBehaviour {
 
     public float moveSpeed;
 
+    private Animator anim;
+
 	// Use this for initialization
 	void Start () {
-		
+        anim = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -25,5 +27,8 @@ public class PlayerController : MonoBehaviour {
         {
             transform.Translate(new Vector3(0f, verticalAxis * moveSpeed * Time.deltaTime, 0f));
         }
-	}
+
+        anim.SetFloat("MoveX", horizontalAxis);
+        anim.SetFloat("MoveY", verticalAxis);
+    }
 }
