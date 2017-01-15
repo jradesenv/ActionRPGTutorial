@@ -9,11 +9,13 @@ public class PlayerController : MonoBehaviour {
     private Animator anim;
     private bool playerMoving;
     private Vector2 lastMove;
+    private Rigidbody2D myRigidBody;
 
 	// Use this for initialization
 	void Start () {
         anim = GetComponent<Animator>();
-	}
+        myRigidBody = GetComponent<Rigidbody2D>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -24,13 +26,15 @@ public class PlayerController : MonoBehaviour {
 
         if (horizontalAxis != 0.0f) //left & right
         {
-            transform.Translate(new Vector3(horizontalAxis * moveSpeed * Time.deltaTime, 0f, 0f));
+            //transform.Translate(new Vector3(horizontalAxis * moveSpeed * Time.deltaTime, 0f, 0f));
+            myRigidBody.velocity = new Vector2(horizontalAxis * moveSpeed, myRigidBody.velocity.y);
             playerMoving = true;
         }
 
         if (verticalAxis != 0.0f) //up & down
         {
-            transform.Translate(new Vector3(0f, verticalAxis * moveSpeed * Time.deltaTime, 0f));
+            //transform.Translate(new Vector3(0f, verticalAxis * moveSpeed * Time.deltaTime, 0f));
+            myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, verticalAxis * moveSpeed);
             playerMoving = true;
         }
 
