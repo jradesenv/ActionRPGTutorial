@@ -5,16 +5,28 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     public float moveSpeed;
+    public Vector2 lastMove;
 
     private Animator anim;
     private bool playerMoving;
-    private Vector2 lastMove;
     private Rigidbody2D myRigidBody;
+
+    private static bool playerExists;
 
 	// Use this for initialization
 	void Start () {
-        anim = GetComponent<Animator>();
-        myRigidBody = GetComponent<Rigidbody2D>();
+        if(playerExists)
+        {
+            Destroy(gameObject);
+        } else
+        {
+            playerExists = true;
+
+            anim = GetComponent<Animator>();
+            myRigidBody = GetComponent<Rigidbody2D>();
+
+            DontDestroyOnLoad(transform.gameObject);
+        }
     }
 	
 	// Update is called once per frame
@@ -27,14 +39,14 @@ public class PlayerController : MonoBehaviour {
         if (horizontalAxis != 0.0f) //left & right
         {
             //transform.Translate(new Vector3(horizontalAxis * moveSpeed * Time.deltaTime, 0f, 0f));
-            myRigidBody.velocity = new Vector2(horizontalAxis * moveSpeed, myRigidBody.velocity.y);
+            myRigidBody.velocity = new Vector2(horizontalAxis * moveSpeed, 0);
             playerMoving = true;
         }
 
         if (verticalAxis != 0.0f) //up & down
         {
             //transform.Translate(new Vector3(0f, verticalAxis * moveSpeed * Time.deltaTime, 0f));
-            myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, verticalAxis * moveSpeed);
+            myRigidBody.velocity = new Vector2(0, verticalAxis * moveSpeed);
             playerMoving = true;
         }
 
