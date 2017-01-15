@@ -41,6 +41,9 @@ public class PlayerController : MonoBehaviour {
         if (playerMoving)
         {
             lastMove = new Vector2(horizontalAxis, verticalAxis);
+        } else
+        {
+            myRigidBody.velocity = new Vector2(0f, 0f);
         }
 
         SetAnimatorProperties(horizontalAxis, verticalAxis);
